@@ -1,11 +1,11 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import { Router } from 'react-router-dom'
-import { createMemoryHistory } from 'history'
 import axiosMock from 'axios'
 import { act } from 'react-dom/test-utils'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import PokemonPage from '../src/PokemonPage'
+
+import { MemoryRouter } from 'react-router-dom'
 
 jest.mock('axios')
 
@@ -71,21 +71,15 @@ const pokemonList = {
   sprites: { front_default: 'URL' }
 }
 
-const history = createMemoryHistory()
-
 describe('<PokemonPage />', () => {
-  beforeEach(() => {
-    history.push('/pokemon/eevee')
-  })
-
   it('should render abilities', async () => {
     axiosMock.get.mockResolvedValueOnce({ data: pokemonList })
 
     await act(async () => {
       render(
-        <Router history={history}>
+        <MemoryRouter initialEntries={['/pokemon/eevee']}>
           <PokemonPage />
-        </Router>
+        </MemoryRouter>,
       )
     })
 
@@ -98,9 +92,9 @@ describe('<PokemonPage />', () => {
 
     await act(async () => {
       render(
-        <Router history={history}>
+        <MemoryRouter initialEntries={['/pokemon/eevee']}>
           <PokemonPage />
-        </Router>
+        </MemoryRouter>,
       )
     })
 
@@ -112,9 +106,9 @@ describe('<PokemonPage />', () => {
 
     await act(async () => {
       render(
-        <Router history={history}>
-          <PokemonPage previous={previous} next={next} />
-        </Router>
+        <MemoryRouter initialEntries={['/pokemon/eevee']}>
+          <PokemonPage />
+        </MemoryRouter>,
       )
     })
 
@@ -127,13 +121,13 @@ describe('<PokemonPage />', () => {
 
     await act(async () => {
       render(
-        <Router history={history}>
+        <MemoryRouter initialEntries={['/pokemon/eevee']}>
           <PokemonPage />
-        </Router>
+        </MemoryRouter>,
       )
     })
 
     expect(screen.queryByText('Previous')).toBeNull()
     expect(screen.queryByText('Next')).toBeNull()
-  })
+  })  
 })

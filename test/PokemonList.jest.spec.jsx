@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import PokemonList from '../src/PokemonList'
 
 
